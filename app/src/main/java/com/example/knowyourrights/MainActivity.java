@@ -1,5 +1,6 @@
 package com.example.knowyourrights;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,8 +26,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 //
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -37,16 +38,18 @@ public class MainActivity extends AppCompatActivity
 //            }
 //        });
 //
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-//        drawer.addDrawerListener(toggle);
-//        toggle.syncState();
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
 //
 //        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 //        navigationView.setNavigationItemSelectedListener(this);
-
-        ArrayList<String> pCategories=new ArrayList<>();
+        dbHelper db=new dbHelper(this);
+        db.addPolicy(new Policy("Policy1","Category1","q","q","q"));
+        db.addPolicy(new Policy("Policy2","Category1","q","q","q"));
+        final ArrayList<String> pCategories=new ArrayList<>();
         pCategories.add("Category1");
         pCategories.add("Category2");
         pCategories.add("Category3");
@@ -59,6 +62,9 @@ public class MainActivity extends AppCompatActivity
         mainList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i= new Intent(MainActivity.this,PolicyListActivity.class);
+                i.putExtra("CAT",""+pCategories.get(position));
+                startActivity(i);
 
             }
         });

@@ -14,4 +14,9 @@ public class Policy {
         this.discription=discription;
         this.link=link;
     }
+
+    @Override
+    public String toString() {
+        return name+" "+category+" "+eligibility+" "+discription+" "+link;
+    }
 }
